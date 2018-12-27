@@ -1,5 +1,6 @@
 {
-  "id": "com.plugwise",
+  "id": "com.plugwise.home",
+  "sdk": 2,
   "version": "2.0.10",
   "compatibility": ">=1.0.2",
   "category": [
@@ -7,15 +8,16 @@
     "tools"
   ],
   "name": {
-    "en": "Plugwise",
-    "nl": "Plugwise"
+    "en": "Plugwise home",
+    "nl": "Plugwise home"
   },
   "description": {
     "en": "Let Homey talk to your Plugwise devices",
     "nl": "Verbind Homey met je Plugwise devices"
   },
+  "brandColor": "#50a2da",
   "author": {
-    "name": "Athom B.V."
+    "name": "Ted Tolbom"
   },
   "images": {
     "large": "./assets/images/large.jpg",
@@ -62,49 +64,6 @@
           "id": "authenticate"
         }
       ]
-    },
-    {
-      "id": "stretch",
-      "name": {
-        "en": "Stretch"
-      },
-      "images": {
-        "large": "./drivers/stretch/assets/images/large.jpg",
-        "small": "./drivers/stretch/assets/images/small.jpg"
-      },
-      "class": "socket",
-      "capabilities": [
-        "onoff",
-        "measure_power",
-        "meter_power"
-      ],
-      "pair": [
-        {
-          "id": "start"
-        },
-        {
-          "id": "authenticate"
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "choose_slave"
-          }
-        },
-        {
-          "id": "choose_slave",
-          "template": "choose_slave",
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ]
     }
-  ],
-  "flow": {}
+  ]
 }

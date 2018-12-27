@@ -1,0 +1,382 @@
+// [ADAM_IP]/core/appliances heater_central http://10.0.2.30/core/appliances // main devices (also used by web interface) http://10.0.2.30/core/locations // main zones (also used by web interface) http://10.0.2.30/core/rules // change the thermostat
+presets http://10.0.2.30/core/domain_objects // zigbee http://10.0.2.30/core/gateways http://10.0.2.30/core/direct_objects Zones curl -X PUT -H 'Content-Type: text/xml' -d '<thermostat_functionality>
+  <setpoint>20.0</setpoint>
+</thermostat_functionality>' -v -i 'http://smile:gwctjqbs@10.0.2.30/core/locations;id=80ea8b94229c45da8bac4dfe44bfbcfe/thermostat' curl -X PUT -H 'Content-Type: text/xml' -d '<locations>
+  <location id="80ea8b94229c45da8bac4dfe44bfbcfe">
+    <preset>home</preset>
+  </location>
+</locations>' -v -i 'http://smile:gwctjqbs@10.0.2.30/core/locations' curl -X PUT -H 'Content-Type: text/xml' -d '<locations>
+  <location id="54c54a08eede42e9bf7da59832dca5b9">
+    <preset>home</preset>
+  </location>
+</locations>' -v -i 'http://smile:gwctjqbs@10.0.2.30/core/locations' Appliances curl -X PUT -H 'Content-Type: text/xml' -d '<thermostat_functionality>
+  <setpoint>19.0</setpoint>
+</thermostat_functionality>' -v -i 'http://smile:gwctjqbs@10.0.2.30/core/appliances;id=3d3369f064c64f91bee17aeb07e62f36/thermostat' curl -X PUT -H 'Content-Type: text/xml' -d '<appliances>
+  <appliance id="c6066d59b0e6460d8f98742a6474d65e">
+    <actuator_functionalities>
+      <offset_functionality>
+        <offset>0.20</offset>
+      </offset_functionality>
+    </actuator_functionalities>
+  </appliance>
+</appliances>' -v -i 'http://smile:gwctjqbs@10.0.2.30/core/appliances' Zones curl -X PUT -H 'Content-Type: text/xml' -d '<thermostat_functionality>
+  <setpoint>20.0</setpoint>
+</thermostat_functionality>' -v -i 'http://smile:[password]@[IP]/core/locations;id=80ea8b94229c45da8bac4dfe44bfbcfe/thermostat' curl -X PUT -H 'Content-Type: text/xml' -d '<locations>
+  <location id="80ea8b94229c45da8bac4dfe44bfbcfe">
+    <preset>home</preset>
+  </location>
+</locations>' -v -i 'http://smile:[password]@[IP]/core/locations' Appliances curl -X PUT -H 'Content-Type: text/xml' -d '<thermostat_functionality>
+  <setpoint>19.0</setpoint>
+</thermostat_functionality>' -v -i 'http://smile:[password]@[IP]/core/appliances;id=3d3369f064c64f91bee17aeb07e62f36/thermostat' curl -X PUT -H 'Content-Type: text/xml' -d '<offset_functionality>
+  <offset>0.20</offset>
+</offset_functionality>' -v -i 'http://smile:[password]@[IP]/core/appliances;id=c6066d59b0e6460d8f98742a6474d65e/thermostat' Central heater (appliances >
+<type>heater_central</type>) class: sensor flame-state flame_state heating_on central_heating_state DWH_state domestic_hot_water_state modulation modulation_level measure_temperature.intended_boiler intended_boiler_temperature
+measure_temperature.actual_boiler boiler_temperature measure_temperature.return_water return_water_temperature fault ? Lisa (appliances >
+<type>zone_thermostat</type>) class: sensor measure_battery battery measure_temperature.setpoint thermostat (or target_temperature with settable = false) measure_temperature temperature temperature_offset temperature_offset // not sure about range
+OpenThermThermostat (appliances >
+<type>thermostat</type>) class: sensor measure_temperature.setpoint thermostat (or target_temperature with settable = false) measure_temperature temperature Floor (appliances >
+<type>thermostatic_radiator_valve</type>) valve_position valve_position measure_temperature temperature measure_temperature.difference temperature_difference measure_temperature.setpoint thermostat temperature_offset temperature_offset // not sure about range Tom (appliances >
+<type>thermostatic_radiator_valve</type>) valve_position valve_position measure_temperature temperature measure_temperature.difference temperature_difference measure_temperature.setpoint thermostat measure_battery battery (not reported when connected
+with cable) temperature_offset temperature_offset // not sure about range open_therm_gateway (appliances >
+<type>open_therm_gateway</type>) // combine with Central heater class: sensor override_mode override_mode open_therm_power_mode open_therm_power_mode Adam (applicances >
+<type>gateway</type>) #nerd-mode class: sensor lan_state lan_state wlan_state wlan_state signal_strength signal_strength link_quality link_quality Zones (locations > all types !== 'building') class: thermostat measure_temperature temperature
+target_temperature thermostat thermostat_mode preset Home (locations > type === 'building') // combine with Adam? class: sensor thermostat_mode preset measure_temperature.outdoor outdoor_temperature wind_vector wind_vector solar_irradiance
+solar_irradiance measure_humidity.outdoor humidity
+
+<appliances>
+  <appliance id="59f5362feec349469ad179bce394f18c">
+    <name>Central heating boiler</name>
+    <description/>
+    <type>heater_central</type>
+    <logs>
+      <cumulative_log id="115af179bbd9490dbc7be56c80f735ab">
+        <type>domestic_hot_water_pump_operation_time</type>
+        <unit>hr</unit>
+      </cumulative_log>
+      <point_log id="22c481e802144c559dd38bbf35f0b4a6">
+        <type>flame_state</type>
+        <measurement log_date="2018-11-04T14:04:50.026+01:00">off</measurement>
+      </point_log>
+      <cumulative_log id="296d68b473a744858961aeb41777d20e">
+        <type>central_heater_pump_operation_time</type>
+        <unit>hr</unit>
+        <measurement log_date="2018-11-02T12:42:50+01:00">16776</measurement>
+      </cumulative_log>
+      <cumulative_log id="3d4e39fabe614c74aad5abb46f7acc42">
+        <type>domestic_hot_water_burner_operation_time</type>
+        <unit>hr</unit>
+        <measurement log_date="2018-10-27T14:52:08+02:00">1864</measurement>
+      </cumulative_log>
+      <point_log id="403040a0cc4a41edbc356032e93ea241">
+        <type>return_water_temperature</type>
+        <unit>C</unit>
+        <measurement log_date="2018-11-02T20:30:28.843+01:00">58.10</measurement>
+      </point_log>
+      <point_log id="4aea9ab5ca334774bcd4c6cbb8a16c98">
+        <type>domestic_hot_water_setpoint</type>
+        <unit>C</unit>
+        <measurement log_date="2018-10-28T00:50:57.753+02:00">60.00</measurement>
+      </point_log>
+      <point_log id="4ea9b903f28c4b2c8f597f86c78c09b3">
+        <type>modulation_level</type>
+        <measurement log_date="2018-11-04T14:04:50.213+01:00">0.00</measurement>
+      </point_log>
+      <cumulative_log id="52d5a66b385b4e84bd7083ae8c4b16e2">
+        <type>domestic_hot_water_pump_starts</type>
+        <measurement log_date="2018-11-02T07:10:37+01:00">48240</measurement>
+      </cumulative_log>
+
+      <point_log id="548d5f8094404300aa21d1a43d5af4c1">
+        <type>central_heating_state</type>
+        <measurement log_date="2018-11-04T14:04:52.002+01:00">on</measurement>
+      </point_log>
+
+      <cumulative_log id="55706f181018432986c7ae4540e66e97">
+        <type>burner_operation_time</type>
+        <unit>hr</unit>
+        <measurement log_date="2018-11-02T19:14:01+01:00">14440</measurement>
+      </cumulative_log>
+
+      <point_log id="59314ae2b5b2496485299bcb32646996">
+        <type>burner_efficiency</type>
+        <unit>s</unit>
+        <measurement log_date="2018-11-04T14:04:52+01:00">13</measurement>
+      </point_log>
+
+      <point_log id="663bee4785b04803820efe4cd28e47cb">
+        <type>open_therm_oem_fault_code</type>
+        <measurement log_date="2018-11-02T15:12:12.811+01:00">255</measurement>
+      </point_log>
+
+      <point_log id="74513f8173be4eb59da5fff357192153">
+        <type>maximum_boiler_temperature</type>
+        <unit>C</unit>
+        <measurement log_date="2018-10-28T00:50:58.137+02:00">50.00</measurement>
+      </point_log>
+
+      <point_log id="7e129a032caa478eb333b964f1b96951">
+        <type>domestic_hot_water_state</type>
+        <measurement log_date="2018-11-04T13:09:35.528+01:00">off</measurement>
+      </point_log>
+
+      <interval_log id="841816b838814474a751910c883e34e8">
+        <type>burner_operation_time</type>
+        <unit>s</unit>
+        <interval>PT1H</interval>
+        <interval_chrono_meter id="0fc05a5f359a43d18006cfc796365f3f"/>
+      </interval_log>
+
+      <point_log id="97c4c0dac5f844b8874914b4e99cf2d5">
+        <type>boiler_temperature</type>
+        <unit>C</unit>
+        <measurement log_date="2018-11-04T14:04:52.932+01:00">26.42</measurement>
+      </period>
+    </point_log>
+
+    <cumulative_log id="b1be568e8ec84c22b885b6518de15c58">
+      <type>failed_burner_starts</type>
+      <measurement log_date="2018-10-27T14:52:07+02:00">104</measurement>
+    </cumulative_log>
+
+    <point_log id="b2845977b0ef441ca9f9ab3210e13546">
+      <type>regulation_state</type>
+      <measurement log_date="2018-10-27T14:52:01.705+02:00">on</measurement>
+    </point_log>
+
+    <cumulative_log id="bc0b31f42c6b4d26ada7ae6b836088fd">
+      <type>burner_starts</type>
+      <unit/>
+      <measurement log_date="2018-11-02T12:00:54+01:00">1703910</measurement>
+    </cumulative_log>
+
+    <interval_log id="c19474efe676482daacd1576f01eba54">
+      <type>burner_efficiency</type>
+      <unit>s</unit>
+      <measurement log_date="2018-11-04T13:00:00+01:00">13</measurement>
+    </period>
+  </interval_log>
+
+  <point_log id="c280ad58d3ec4c928003155dbfe5eeb1">
+    <type>open_therm_application_specific_fault_code</type>
+    <unit/>
+    <measurement log_date="2018-11-02T15:12:12.811+01:00">0</measurement>
+  </point_log>
+
+  <point_log id="c4906c057a7643d49219f794a1368eb9">
+    <type>intended_boiler_temperature</type>
+    <unit>C</unit>
+    <measurement log_date="2018-11-04T14:00:15.196+01:00">29.75</measurement>
+  </point_log>
+
+  <cumulative_log id="ce9336c79cf54e2397bfd715538a667a">
+    <type>domestic_hot_water_burner_starts</type>
+    <unit/>
+    <measurement log_date="2018-11-02T12:00:55+01:00">1572840</measurement>
+  </cumulative_log>
+
+  <cumulative_log id="d4d38881e65b43fc85b750623256ef06">
+    <measurement log_date="2018-11-02T12:00:54+01:00">1703910</measurement>
+  </cumulative_log>
+
+  <point_log id="dd3aae7598f94d239d6f9720ce0ab7e2">
+    <type>domestic_hot_water_comfort_mode</type>
+    <measurement log_date="2018-11-02T12:00:47.290+01:00">on</measurement>
+  </point_log>
+
+  <cumulative_log id="ed3f0e5b15b74e04870a57695ee8d7f7">
+    <type>failed_burner_flame_ignitions</type>
+    <measurement log_date="2018-10-27T14:52:07+02:00">216</measurement>
+  </cumulative_log>
+
+  <point_log id="eea4551a542a4d609368449f0c8b8903">
+    <type>intended_central_heating_state</type>
+    <measurement log_date="2018-11-04T13:10:14.879+01:00">on</measurement>
+  </point_log>
+</logs>
+<actuator_functionalities>
+  <thermostat_functionality id="163434af39374f908a7d07ca6723939c">
+    <updated_date>2018-10-28T00:50:58.137+02:00</updated_date>
+    <type>maximum_boiler_temperature</type>
+    <setpoint>50</setpoint>
+    <upper_bound>50</upper_bound>
+    <lower_bound>25</lower_bound>
+    <resolution>0.01</resolution>
+    <thermostat id="71a19b844f634e1f9349db622f31ba04"/>
+    <regulations/>
+  </thermostat_functionality>
+  <toggle_functionality id="2e3df6d9d22a48b7b6ea347b50954d86">
+    <updated_date>2018-10-27T14:52:01.705+02:00</updated_date>
+    <type>regulation_state</type>
+    <state>on</state>
+    <regulation_toggle id="bc634dc111564c9ab28678b17606caf2"/>
+  </toggle_functionality>
+  <toggle_functionality id="71acd015a90c4b2d96425d55eceaf647">
+    <updated_date>2018-11-02T12:00:47.290+01:00</updated_date>
+    <type>domestic_hot_water_comfort_mode</type>
+    <state>on</state>
+    <domestic_hot_water_toggle id="9c10d9d1ebac4422a8fd4241cf6f6fa6"/>
+  </toggle_functionality>
+  <thermostat_functionality id="f20b52d76a964bbcb41ae760d56c52bb">
+    <updated_date>2018-10-28T00:50:57.753+02:00</updated_date>
+    <type>domestic_hot_water_setpoint</type>
+    <setpoint>60</setpoint>
+    <upper_bound>60</upper_bound>
+    <lower_bound>40</lower_bound>
+    <resolution>0.01</resolution>
+    <thermostat id="5acdee2c9c6d46a6aa02d832643c7100"/>
+    <regulations/>
+  </thermostat_functionality>
+</actuator_functionalities>
+</appliance>
+
+<locations>
+<location id="80ea8b94229c45da8bac4dfe44bfbcfe">
+  <name>Office Ted</name>
+  <description/>
+  <type>office</type>
+  <created_date>2018-10-11T11:28:17.149+02:00</created_date>
+  <modified_date>2018-11-04T14:03:33.613+01:00</modified_date>
+  <deleted_date/>
+  <preset>away</preset>
+  <appliances>
+    <appliance id="c6066d59b0e6460d8f98742a6474d65e"/>
+    <appliance id="d1513d239070495ca15f00d79253db50"/>
+  </appliances>
+  <logs>
+    <point_log id="742947a97d3e4b19b5b0c1bd018d7774">
+      <updated_date>2018-11-04T09:00:03.538+01:00</updated_date>
+      <type>thermostat</type>
+      <unit>C</unit>
+      <last_consecutive_log_date>2018-10-11T11:30:03.339+02:00</last_consecutive_log_date>
+      <period start_date="2018-11-04T09:00:03.538+01:00" end_date="2018-11-04T09:00:03.538+01:00">
+        <measurement log_date="2018-11-04T09:00:03.538+01:00">17.00</measurement>
+      </period>
+    </point_log>
+    <point_log id="96ee0e5b0ce149df9a3a67dd96f4b2e6">
+      <updated_date>2018-11-04T14:03:33.592+01:00</updated_date>
+      <type>temperature</type>
+      <unit/>
+      <last_consecutive_log_date>2018-10-11T11:31:22.018+02:00</last_consecutive_log_date>
+      <period start_date="2018-11-04T14:03:33.592+01:00" end_date="2018-11-04T14:03:33.592+01:00">
+        <measurement log_date="2018-11-04T14:03:33.592+01:00">16.60</measurement>
+      </period>
+    </point_log>
+  </logs>
+  <actuator_functionalities>
+    <thermostat_functionality id="94487c3c0e8b46c4934e95ae62abae28">
+      <updated_date>2018-11-04T09:00:00.734+01:00</updated_date>
+      <type>thermostat</type>
+      <setpoint>17</setpoint>
+      <upper_bound>9990</upper_bound>
+      <lower_bound>0</lower_bound>
+      <resolution>0.01</resolution>
+      <regulations>
+        <open_therm_regulation id="89c0b8d4326b4af8b6123cae33f5ec5f"/>
+      </regulations>
+    </thermostat_functionality>
+  </actuator_functionalities>
+  <clients/>
+</location>
+
+<location id="54c54a08eede42e9bf7da59832dca5b9">
+  <name>Home</name>
+  <description/>
+  <type>building</type>
+  <created_date>2018-04-19T15:47:20.813+02:00</created_date>
+  <modified_date>2018-11-04T13:52:31.956+01:00</modified_date>
+  <deleted_date/>
+  <preset>home</preset>
+  <appliances/>
+  <logs>
+    <point_log id="4419042c9978451d8cc19df385a2fc80">
+      <updated_date>2018-11-04T13:25:00+01:00</updated_date>
+      <type>outdoor_temperature</type>
+      <unit>C</unit>
+      <last_consecutive_log_date>2018-11-04T13:25:00+01:00</last_consecutive_log_date>
+      <thermo_meter id="e39c6ee89191473ca424cd9494d3af46"/>
+      <period start_date="2018-11-04T13:25:00+01:00" end_date="2018-11-04T13:25:00+01:00">
+        <measurement log_date="2018-11-04T13:25:00+01:00">11.69</measurement>
+      </period>
+    </point_log>
+    <point_log id="81bfe337572446e9bfe20a673078a006">
+      <updated_date>2018-11-04T13:25:00+01:00</updated_date>
+      <type>wind_vector</type>
+      <unit>m_s</unit>
+      <last_consecutive_log_date>2018-11-04T13:25:00+01:00</last_consecutive_log_date>
+      <wind_vector id="af2b06fba5f04b6fbe8dd4cd345ab25a"/>
+      <period start_date="2018-11-04T13:25:00+01:00" end_date="2018-11-04T13:25:00+01:00">
+        <measurement log_date="2018-11-04T13:25:00+01:00">(3.10,140.00)</measurement>
+      </period>
+    </point_log>
+    <point_log id="979d8bfe2a5c4de4b3ba1c1b471f912b">
+      <updated_date>2018-11-04T13:25:00+01:00</updated_date>
+      <type>solar_irradiance</type>
+      <unit>W_m2</unit>
+      <last_consecutive_log_date>2018-11-04T13:25:00+01:00</last_consecutive_log_date>
+      <irradiance_meter id="d572f798616c40709da1bbf31ae6b6e5"/>
+      <period start_date="2018-11-04T13:25:00+01:00" end_date="2018-11-04T13:25:00+01:00">
+        <measurement log_date="2018-11-04T13:25:00+01:00">145.81</measurement>
+      </period>
+    </point_log>
+    <point_log id="ecf4ad0967324803aaf177e43fd203f5">
+      <updated_date>2018-11-04T13:25:00+01:00</updated_date>
+      <type>humidity</type>
+      <unit>RH</unit>
+      <last_consecutive_log_date>2018-11-04T13:25:00+01:00</last_consecutive_log_date>
+      <hygro_meter id="cf0882312e084c988e6614858db907ab"/>
+      <period start_date="2018-11-04T13:25:00+01:00" end_date="2018-11-04T13:25:00+01:00">
+        <measurement log_date="2018-11-04T13:25:00+01:00">71.00</measurement>
+      </period>
+    </point_log>
+  </logs>
+  <actuator_functionalities/>
+  <clients/>
+</location>
+
+<location id="2c7402eddcc3418c893aafee66359880">
+  <name>Living room</name>
+  <description>The room containing the (central) home thermostat.</description>
+  <type>livingroom</type>
+  <created_date>2018-10-27T14:51:54.223+02:00</created_date>
+  <modified_date>2018-11-04T13:22:17.021+01:00</modified_date>
+  <deleted_date/>
+  <preset>home</preset>
+  <appliances>
+    <appliance id="289ea6ce311246789ed8d083ed925ca7"/>
+    <appliance id="3d3369f064c64f91bee17aeb07e62f36"/>
+  </appliances>
+  <logs>
+    <point_log id="5b80f6f5c626409988b56a3f8d2750dd">
+      <updated_date>2018-11-04T13:22:16.973+01:00</updated_date>
+      <type>temperature</type>
+      <unit/>
+      <last_consecutive_log_date>2018-10-28T09:34:21.350+01:00</last_consecutive_log_date>
+      <period start_date="2018-11-04T13:22:16.973+01:00" end_date="2018-11-04T13:22:16.973+01:00">
+        <measurement log_date="2018-11-04T13:22:16.973+01:00">19.50</measurement>
+      </period>
+    </point_log>
+    <point_log id="6bced16f63f544b7ba9aae268f2baf70">
+      <updated_date>2018-11-04T10:44:59.451+01:00</updated_date>
+      <type>thermostat</type>
+      <unit>C</unit>
+      <last_consecutive_log_date>2018-10-28T08:00:00.429+01:00</last_consecutive_log_date>
+      <period start_date="2018-11-04T10:44:59.451+01:00" end_date="2018-11-04T10:44:59.451+01:00">
+        <measurement log_date="2018-11-04T10:44:59.451+01:00">19.00</measurement>
+      </period>
+    </point_log>
+  </logs>
+  <actuator_functionalities>
+    <thermostat_functionality id="37bfb6b009e14ad98f03f232cd6974b8">
+      <type>thermostat</type>
+      <setpoint>19</setpoint>
+      <upper_bound>99.99</upper_bound>
+      <lower_bound>0</lower_bound>
+      <resolution>0.01</resolution>
+      <regulations>
+        <open_therm_regulation id="89c0b8d4326b4af8b6123cae33f5ec5f"/>
+      </regulations>
+    </thermostat_functionality>
+  </actuator_functionalities>
+  <clients/>
+</location>
+</locations>

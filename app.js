@@ -1,7 +1,9 @@
 'use strict';
 
-const Log = require('homey-log').Log;
+const Homey = require('homey');
 
-module.exports.init = () => {
-	console.log(`${Homey.manifest.id} running...`);
+module.exports = class PlugwiseHomeApp extends Homey.App {
+	onInit() {
+		this.log(`${Homey.manifest.id} running...`);
+	}
 };

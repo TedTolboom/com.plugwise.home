@@ -24,45 +24,33 @@
 
 <script type="text/javascript">
 	Homey.setTitle(__('pair.auth.smile.title'));
-
 	document.getElementById("password").setAttribute("placeholder", __("pair.auth.smile.id"));
-
 	if (!window.found_devices[window.selected_devices[0]]) {
 		document.getElementById("submit").setAttribute("disabled", "disabled");
 		Homey.alert(__("pair.no_device_selected"));
 		Homey.showView("list_devices");
 	}
-
 	function getForm() {
-
 		// Mark as authenticating
 		document.getElementById('submit').disabled = 'disabled';
 		document.getElementById('submit').value = __('pair.auth.checking');
-
-		// Store password of device
-		window.found_devices[window.selected_devices[0]].data.password = document.forms["form"]["password"].value;
-
-		// Create device object
-		var device = window.found_devices[window.selected_devices[0]].data;
-
+		const found = window.selected_devices[0];
+        var device = JSON.parse(found);
+        device['password'] = document.forms["form"]["password"].value;
 		Homey.emit('connect', device, function (err, result) {
 			if (err) {
-
 				// Pairing failed
 				document.getElementById('submit').disabled = false;
 				document.getElementById('submit').value = __('pair.auth.try_again');
 				Homey.alert(__('pair.auth.smile.wrong_id', {error: err}));
 			}
 			else {
-
 				// Pairing succeeded
 				document.getElementById('submit').value = __('pair.auth.correct');
-
 				// Add device
 				Homey.addDevice(result, function (err, result) {
 					if (err) console.error(err);
 					else console.log(result);
-
 					Homey.done();
 				});
 			}

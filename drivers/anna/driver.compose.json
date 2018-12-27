@@ -1,0 +1,34 @@
+{
+	"id": "anna",
+	"name": {
+		"en": "Anna"
+	},
+	"images": {
+		"large": "./drivers/anna/assets/images/large.jpg",
+		"small": "./drivers/anna/assets/images/small.jpg"
+	},
+	"class": "thermostat",
+	"icon": "/assets/icon.svg",
+	"capabilities": [
+    "target_temperature",
+    "measure_temperature"
+  ],
+	"capabilitiesOptions": {
+		"target_temperature": {
+			"min": 4,
+			"max": 30
+		}
+	},
+	"pair": [
+		{
+			"id": "list_devices",
+			"template": "list_devices_singular",
+			"navigation": {
+				"next": "authenticate"
+			}
+    },
+		{
+			"id": "authenticate"
+    }
+  ]
+}
