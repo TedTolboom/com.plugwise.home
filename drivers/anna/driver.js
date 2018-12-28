@@ -39,6 +39,42 @@ class AnnaDriver extends Homey.Driver {
 	};
 	*/
 
+	// this method is called when the Device is inited
+	onInit() {
+		let count = 0;
+
+		let devices_data = this.getDevices();
+
+		// No devices, driver init is finished
+		if (devices_data.length === 0) callback(null, true);
+
+		// Loop over installed devices
+		for (let i in devices_data) {
+
+			// Set as default offline
+			this.setUnavailable(devices_data[i], "Offline");
+
+			// Refresh client
+			devices_data[i].client = new Anna(devices_data[i].password, devices_data[i].ip, devices_data[i].id, devices_data[i].hostname, () => {
+				count++;
+				if (count === devices_data.length) {
+					console.log('Anna: driver done');
+					callback(null, true);
+				}
+			});
+
+			// Store device
+			devices.push({
+				data: devices_data[i]
+			});
+			this.log('init', devices_data[i]);
+			this.log(this._listenForEvents());
+			// Start listening for device events
+			this.getDevice(devices_data[i])._listenForEvents(devices_data[i]);
+		}
+		return true
+	}
+
 	onPair(socket) {
 		// module.exports.pair = function (socket) {
 
@@ -103,7 +139,7 @@ class AnnaDriver extends Homey.Driver {
 						};
 
 						// Start listening for device events
-						this._listenForEvents(formatted_device.data);
+						// this._listenForEvents(formatted_device.data);
 
 						// Callback device
 						callback(null, formatted_device);
